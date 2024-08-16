@@ -1,0 +1,91 @@
+#include <main2.h>
+#define LCD_DATA_PORT getenv("SFR:PORTC") 
+#include <lcd.c>
+int contarPedestre;
+int contarCarro;
+
+void main()
+{
+
+   lcd_init();
+   printf(lcd_putc,"\f Escola Nautica \nMicroprocesador2 ");
+   lcd_gotoxy(19,1);
+   printf(lcd_putc,"Simulador PIC ");
+   lcd_gotoxy(20,2);
+   printf(lcd_putc,"By Grupo-04");
+   delay_ms(1500);
+
+   while(TRUE)
+   {
+   if (input(pin_B6)==1){ // quando o sensor veiculo for acionado
+     contarCarro++;
+                        }
+  // Inico do codico de simafamoro a funcionar normalmente só com luz verde acessa sem detectar apresenca de pedestre.
+         output_high(pin_D5); // para acender a luz verde do Simafore de Veiculuos.
+         output_low(pin_D4);  
+         output_low(pin_D3);
+         
+         output_low(pin_D2); 
+         output_low(pin_D1);
+         output_high(pin_D0); // para acender a luz vermelha do simafore de pedestre
+         
+            printf(lcd_putc,"\fMicroprocesador2 \n Simulacao PIC");
+            lcd_gotoxy(17,1);
+            printf(lcd_putc,"Piorida-Veiculos ");
+            lcd_gotoxy(19,2);
+            printf(lcd_putc," Sem Pedestre",);
+            delay_ms(50);
+         
+        if (input(pin_B7)==1){ // quando o sensor for acionado
+      //  if(contarPedestre> contarCarro){
+           contarPedestre ++; // Incrimento serve para contar os pedestre.
+            
+            delay_ms(50);
+            output_low(pin_D5); 
+            output_high(pin_D4); // para acender a luz amarela de simafore de veiculos
+            output_low(pin_D3);
+            
+            output_low(pin_D2);
+            output_low(pin_D1);
+            output_high(pin_D0); // Quando a luz amerela tiver acesso o simafore de pedestre continua com a vermelha acessa
+            delay_ms(300);
+            
+               printf(lcd_putc,"\fMicroprocesador2 \n Simulacao PIC");
+               lcd_gotoxy(17,1);
+               printf(lcd_putc,"Piorida-Pedestres ");
+               lcd_gotoxy(17,2);
+               printf(lcd_putc,"Sem demada-veiculos");
+               
+            output_low(pin_D5); 
+            output_low(pin_D4);
+            output_high(pin_D3); // para acender a luz vermelha do simafore de veiculos.
+            
+            output_high(pin_D2); // para acender a luz verde de simafore de pedestre
+            output_low(pin_D1);
+            output_low(pin_D0);
+            delay_ms(1000);
+            
+            contarPedestre --; // Decrimento serve para subtrair os pedestre.
+              } /*else{
+          output_high(pin_D5); // para acender a luz verde do Simafore de Veiculuos.
+          output_low(pin_D4);  
+          output_low(pin_D3);
+         
+          output_low(pin_D2); 
+          output_low(pin_D1);
+          output_high(pin_D0); // para acender a luz vermelha do simafore de pedestre
+         
+            printf(lcd_putc,"\fMicroprocesador2 \n Simulacao PIC");
+            lcd_gotoxy(17,1);
+            printf(lcd_putc,"Piorida-Veiculos ");
+            lcd_gotoxy(19,2);
+            printf(lcd_putc,"Maior demanda",);
+            delay_ms(50);
+            contarCarro--;
+            }
+              }*/
+                            // fim do If.
+  
+   }
+
+}
